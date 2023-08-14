@@ -47,28 +47,24 @@
         >
           <i class="bi bi-person-circle"></i>
           <span class="d-none d-md-block dropdown-toggle ps-2"
-            >{{email}}</span
+            >Menu</span
           > </a
         ><!-- End Profile Iamge Icon -->
 
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
           <li class="dropdown-header">
-            <h6>{{name}}</h6>
+            <h6>{{email}}</h6>
             <span>hello!</span>
           </li>
           <li>
             <hr class="dropdown-divider" />
           </li>
 
-          <li>
-            <a
-              class="dropdown-item d-flex align-items-center"
-              href="users-profile.html"
-            >
-              <i class="bi bi-person"></i>
-              <span>My Products</span>
-            </a>
-          </li>
+          <form action="/dashboard" method="GET">
+            <button type="submit" class="btn btn-success rounded-pill">
+              <i class="bi bi-box-arrow-right"></i> Dashboard
+            </button>
+          </form>
           <li>
             <hr class="dropdown-divider" />
           </li>
@@ -77,25 +73,16 @@
             <hr class="dropdown-divider" />
           </li>
 
-          <li>
-            <a
-              class="dropdown-item d-flex align-items-center"
-              href="pages-faq.html"
-            >
-              <i class="bi bi-question-circle"></i>
-              <span>Need Help?</span>
-            </a>
-          </li>
+          
           <li>
             <hr class="dropdown-divider" />
           </li>
 
           <li>
             <form action="/logout" method="POST">
-              <a class="dropdown-item d-flex align-items-center" href="#" type="submit" >
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
-              </a>
+              <button type="submit" class="btn btn-danger rounded-pill">
+                <i class="bi bi-box-arrow-right"></i> Sign Out
+              </button>
             </form>
           </li>
         </ul>
@@ -169,7 +156,7 @@
                       aria-selected="false"
                       tabindex="-1"
                     >
-                      Sales
+                      Manage Your location
                     </button>
                   </li>
                   <li class="nav-item" role="presentation">
@@ -265,52 +252,70 @@
                     role="tabpanel"
                     aria-labelledby="profile-tab"
                   >
-            <button id="getLocationBtn" class="btn btn-success rounded-pill mb-2em" style="margin-bottom: 2em;">Get Location</button>
+                    <button
+                      id="getLocationBtn"
+                      class="btn btn-success rounded-pill mb-2em"
+                      style="margin-bottom: 2em"
+                    >
+                      Get Location
+                    </button>
 
-                  <form action="/add_location" method="POST" id="myForm">
-                    <input type="text" name="locationtext" id="locationtext" readonly placeholder="Your coordinates will show here">
-                    <button type="submit" class="btn btn-success rounded-pill">Save Location</button>
-                </form>
-          
-              <script>
-                  var myForm = document.getElementById('myForm');
-                  var locationtextInput = document.getElementById('locationtext');
-          
-        
-          
-                  locationtextInput.value = latitude + ", " + longitude;
-          
-                  
-                  myForm.submit();
-              </script>
-            
+                    <form action="/add_location" method="POST" id="myForm">
+                      <input
+                        type="text"
+                        name="locationtext"
+                        id="locationtext"
+                        readonly
+                        placeholder="Your coordinates will show here"
+                      />
+                      <button
+                        type="submit"
+                        class="btn btn-success rounded-pill"
+                      >
+                        Save Location
+                      </button>
+                    </form>
 
-            <script>
-                var getLocationBtn = document.getElementById('getLocationBtn');
-        
-                getLocationBtn.addEventListener('click', function() {
-                    if (navigator.geolocation) {
-                        // Get the user's current location
-                        navigator.geolocation.getCurrentPosition(showPosition);
-                    } else {
-                        alert('Geolocation is not supported by this browser.');
-                    }
-                });
-        
-                function showPosition(position) {
-                    var latitude = position.coords.latitude;
-                    var longitude = position.coords.longitude;
-        
-                    // Do something with the latitude and longitude values
-                    console.log('Latitude: ' + latitude);
-                    console.log('Longitude: ' + longitude);
-                    var locationtextInput = document.getElementById('locationtext');
-          
-        
-          
-                  locationtextInput.value = latitude + ", " + longitude;
-                }
-            </script>
+                    <script>
+                      var myForm = document.getElementById("myForm");
+                      var locationtextInput =
+                        document.getElementById("locationtext");
+
+                      locationtextInput.value = latitude + ", " + longitude;
+
+                      myForm.submit();
+                    </script>
+
+                    <script>
+                      var getLocationBtn =
+                        document.getElementById("getLocationBtn");
+
+                      getLocationBtn.addEventListener("click", function () {
+                        if (navigator.geolocation) {
+                          // Get the user's current location
+                          navigator.geolocation.getCurrentPosition(
+                            showPosition
+                          );
+                        } else {
+                          alert(
+                            "Geolocation is not supported by this browser."
+                          );
+                        }
+                      });
+
+                      function showPosition(position) {
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+
+                        // Do something with the latitude and longitude values
+                        console.log("Latitude: " + latitude);
+                        console.log("Longitude: " + longitude);
+                        var locationtextInput =
+                          document.getElementById("locationtext");
+
+                        locationtextInput.value = latitude + ", " + longitude;
+                      }
+                    </script>
                   </div>
                   <div
                     class="tab-pane fade active show"
@@ -382,7 +387,10 @@
                                     <b> {{product['name']}} </b>
                                   </div>
                                   <div class="modal-footer">
-                                    <form action="/delete_product" method="POST">
+                                    <form
+                                      action="/delete_product"
+                                      method="POST"
+                                    >
                                       <input
                                         type="text"
                                         value="{{product['_id']}}"
@@ -546,65 +554,38 @@
    -->
           <div class="col-12">
             <div class="card top-selling overflow-auto">
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
+              
               <div class="card-body pb-0">
-                <h5 class="card-title">Top Selling <span>| Today</span></h5>
+                <h5 class="card-title">Watch Statistics<span>| Insights</span></h5>
 
                 <table class="table table-borderless">
                   <thead>
                     <tr>
                       <th scope="col">Name</th>
-                      <th scope="col">Watch</th>
+                      <th scope="col">Watch Count</th>
                       <th scope="col">Price</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% if user_products %} {% for x in user_products %}
+                    {% if watch_data %} {% for x in watch_data %}
                     <tr>
-                      <th scope="row">
-                        <a href="#"
-                          ><img src="assets/img/product-1.jpg" alt=""
-                        /></a>
-                      </th>
-                      <td>
-                        <a href="#" class="text-primary fw-bold"
-                          >Ut inventore ipsa voluptas nulla</a
-                        >
+                      <td scope="row">
+                        {{x['name']}}
                       </td>
-                      <td>$64</td>
-                      <td class="fw-bold">124</td>
-                      <td>$5,828</td>
+                      <td>
+                        {{x['count']}}
+                      </td>
+                      <td>{{x['price']}}</td>
+                      
                     </tr>
-                    {% endfor %} {% endif %}
+                    {% endfor %} 
+                    {% else %}
                     <tr>
-                      <th scope="row">
-                        <a href="#"
-                          ><img src="assets/img/product-1.jpg" alt=""
-                        /></a>
-                      </th>
-                      <td>
-                        <a href="#" class="text-primary fw-bold"
-                          >Ut inventore ipsa voluptas nulla</a
-                        >
-                      </td>
-                      <td>$64</td>
-                      <td class="fw-bold">124</td>
-                      <td>$5,828</td>
+                      
+                      <td>No Watches Yet!</td>
                     </tr>
+                    {% endif %}
+                   
                   </tbody>
                 </table>
               </div>

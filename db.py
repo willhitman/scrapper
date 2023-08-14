@@ -137,13 +137,12 @@ def search_products(search):
     
 def search_watched_products(email):
     regex = re.compile('.*' + re.escape(email) + '.*', re.IGNORECASE)
-    product_list = list(products.find({"name": regex}))
+    product_list = list(products.find({"user": regex}))
     for r in product_list:
         id = ObjectId(r['_id'])
         watch_count=watch_tb.count_documents({'product':id})
         r['count'] = watch_count
     return product_list
-
 
 def get_one_product(search):
     product_list = []
@@ -159,6 +158,9 @@ def update_products_no_image(id,name,price,user):  # type: ignore
         id_object = ObjectId(id)
         products.update_one({'_id': id_object}, {"$set":{'name':name, 'price':price}})
         if price:
+            pr = watch_tb.find_one({"product": id_object})
+            if pr:
+                watch_tb.delete_one({'product':id_object})
             current_datetime = datetime.now()
             watch = {'product':id_object, 'date':current_datetime,'user':user}
             watch_tb.insert_one(watch)
@@ -201,12 +203,22 @@ def add_product_to_cart(id,user, count):
 def get_notifications(email):
     regex = re.compile('.*' + re.escape(email) + '.*', re.IGNORECASE)
     try:
-        product_list = list(products.find({"name": regex}))
+        product_list = list(watch_tb.find({'user':email}))
+        for r in product_list:
+            id = ObjectId(r['product'])
+            pr = products.find_one({'_id':id})
+            r['name'] = pr['name']
+            r['price'] = pr['price']
+            loc = seller_location.find_one({'email':email})
+            r['location'] = loc['location']
+            del r['_id']
+            del r['product']
+            del r['user']
+        print(product_list)
         return product_list
     except Exception as e:
         print(e)
         return"Error"
-
 def add_user_location(email, location):
     loc = {'email':email, 'location':location}
     try:    
