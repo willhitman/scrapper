@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block content%}
+
+
+{% if message  %}
+    {% if message_type == 'success' %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% elif message_type == 'warning' %}
+        <div class="alert alert-warning">{{ message }}</div>
+    {% elif message_type == 'error' %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% else %}
+        <div class="alert alert-info">{{ message }}</div>
+    {% endif %}
+{% endif %}
+<h2>Welcome Login Below to access your Account</h2>
+<div class="container">
+  <form action="/login" method="post">
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        aria-describedby="emailHelp" required
+      />
+      <div id="emailHelp" class="form-text">
+        We'll never share your email with anyone else.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" name="password" required/>
+    </div>
+
+    <!-- <div class="mb-3 form-check">
+      <input type="checkbox" name="check" class="form-check-input" id="check" />
+      <label class="form-check-label" for="check">Accept terms of service</label>
+    </div> -->
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+</div>
+{% endblock%}

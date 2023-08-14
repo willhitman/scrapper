@@ -1,0 +1,129 @@
+{% extends 'index.html' %} {% block products%}
+<h2>Search results for {{ search }}</h2>
+<section class="section dashboard">
+  <div class="row">
+    <!-- Left side columns -->
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="col-12">
+          {% if products %} {% for p in products %}
+          <div class="card info-card customers-card">
+            <div class="card-body">
+              <h5 class="card-title">{{p[3]}} <span>| Today</span></h5>
+
+              <div class="d-flex align-items-center">
+                <div
+                  class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                >
+                  <i class="bi bi-bullseye"></i>
+                </div>
+                <div class="ps-3">
+                  <h6>{{p[0]}}</h6>
+                  <span class="text-muted small pt-2 ps-1">${{p[1]}}</span>
+                  <a
+                    href="https://www.google.com/maps/search/{{p[3]}}"
+                    class="btn btn-success rounded-pill"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Visit</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %} {% else %}
+          <div class="card info-card customers-card">
+            <div class="card-body">
+              <h5 class="card-title">No products found<span>| empty</span></h5>
+
+              <div class="d-flex align-items-center">
+                <div
+                  class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                >
+                  <i class="bi bi-exclamation-triangle"></i>
+                </div>
+                <div class="ps-3">
+                  <h6>Your search results did not return anything</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6" style="margin: 0, 30px">
+      <div class="row">
+        <div class="col-12">
+          {% if shopper_products %} {% for pr in shopper_products %}
+          <div class="card info-card customers-card">
+            <div class="card-body">
+              <h5 class="card-title">
+                {{pr['name']}} <span>| SPONSORED</span>
+              </h5>
+
+              <div class="d-flex align-items-center">
+                <div
+                  class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                >
+                  <img
+                    src="{{ url_for('static', filename='products/' + pr['image']) }}"
+                    style="max-width: 150%; max-height: 150%"
+                    alt=""
+                  />
+                </div>
+                <div class="ps-3">
+                  <h6>${{pr['price']}}</h6>
+                  <!-- add to cart -->
+                  <form action="/add_to_cart" method="POST">
+                    <input
+                      type="text"
+                      name="id"
+                      id="id"
+                      value="{{pr['_id']}}"
+                      hidden
+                    />
+                    <input
+                      type="number"
+                      class="form-control mb-1"
+                      name="count"
+                      id="count"
+                      value="1"
+                      min=1
+                      max="10"
+                      style="width: 7em;"
+                    />
+                    <button type="submit" class="btn btn-primary">
+                      <i class="bi bi-cart-plus-fill"></i> Add to Cart
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %} {% else %}
+          <div class="card info-card customers-card">
+            <div class="card-body">
+              <h5 class="card-title">No products found<span>| empty</span></h5>
+
+              <div class="d-flex align-items-center">
+                <div
+                  class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                >
+                  <i class="bi bi-exclamation-triangle"></i>
+                </div>
+                <div class="ps-3">
+                  <h6>Your search results did not return anything</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock%}

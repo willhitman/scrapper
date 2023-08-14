@@ -1,0 +1,591 @@
+<!-- ======= Header ======= -->
+{% extends 'base.html' %} {% block content%}
+<header id="header" class="header fixed-top d-flex align-items-center">
+  <div class="d-flex align-items-center justify-content-between">
+    <a href="index.html" class="logo d-flex align-items-center">
+      <img src="assets/img/logo.png" alt="" />
+      <span class="d-none d-lg-block">Shopper</span>
+    </a>
+    <i class="bi bi-list toggle-sidebar-btn"></i>
+  </div>
+  <!-- End Logo -->
+
+  <div class="search-bar">
+    <form
+      class="search-form d-flex align-items-center"
+      method="post"
+      action="/search"
+    >
+      <input
+        type="text"
+        name="message"
+        placeholder="Search"
+        title="Enter search keyword"
+      />
+      <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+    </form>
+  </div>
+  <!-- End Search Bar -->
+
+  <nav class="header-nav ms-auto">
+    <ul class="d-flex align-items-center">
+      <li class="nav-item d-block d-lg-none">
+        <a class="nav-link nav-icon search-bar-toggle" href="#">
+          <i class="bi bi-search"></i>
+        </a>
+      </li>
+      <!-- End Search Icon-->
+
+      <li class="nav-item dropdown"></li>
+      <!-- End Notification Nav -->
+
+      <li class="nav-item dropdown pe-3">
+        <a
+          class="nav-link nav-profile d-flex align-items-center pe-0"
+          href="#"
+          data-bs-toggle="dropdown"
+        >
+          <i class="bi bi-person-circle"></i>
+          <span class="d-none d-md-block dropdown-toggle ps-2"
+            >{{email}}</span
+          > </a
+        ><!-- End Profile Iamge Icon -->
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li class="dropdown-header">
+            <h6>{{name}}</h6>
+            <span>hello!</span>
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+
+          <li>
+            <a
+              class="dropdown-item d-flex align-items-center"
+              href="users-profile.html"
+            >
+              <i class="bi bi-person"></i>
+              <span>My Products</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+
+          <li>
+            <a
+              class="dropdown-item d-flex align-items-center"
+              href="pages-faq.html"
+            >
+              <i class="bi bi-question-circle"></i>
+              <span>Need Help?</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+
+          <li>
+            <form action="/logout" method="POST">
+              <a class="dropdown-item d-flex align-items-center" href="#" type="submit" >
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </form>
+          </li>
+        </ul>
+        <!-- End Profile Dropdown Items -->
+      </li>
+      <!-- End Profile Nav -->
+    </ul>
+  </nav>
+  <!-- End Icons Navigation -->
+</header>
+<!-- End Header -->
+
+<!-- ======= Sidebar ======= -->
+
+<main id="main" class="main">
+  {% if message %} {% if message_type == 'success' %}
+  <div class="alert alert-success">{{ message }}</div>
+  {% elif message_type == 'warning' %}
+  <div class="alert alert-warning">{{ message }}</div>
+  {% elif message_type == 'error' %}
+  <div class="alert alert-danger">{{ message }}</div>
+  {% else %}
+  <div class="alert alert-info">{{ message }}</div>
+  {% endif %} {% endif %}
+  <div class="pagetitle">
+    <h1>Welcome to your Dashboard</h1>
+  </div>
+  <!-- End Page Title -->
+
+  <section class="section dashboard">
+    <div class="row">
+      <!-- Left side columns -->
+      <div class="col-lg-8">
+        <div class="row">
+          <!-- Manage Products -->
+
+          <div class="col-12">
+            <div class="card top-selling overflow-auto">
+              <div class="card-body">
+                <h5 class="card-title">Options</h5>
+
+                <!-- Bordered Tabs -->
+                <ul
+                  class="nav nav-tabs nav-tabs-bordered"
+                  id="borderedTab"
+                  role="tablist"
+                >
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="home-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#bordered-home"
+                      type="button"
+                      role="tab"
+                      aria-controls="home"
+                      aria-selected="true"
+                    >
+                      Add New Products
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="profile-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#bordered-profile"
+                      type="button"
+                      role="tab"
+                      aria-controls="profile"
+                      aria-selected="false"
+                      tabindex="-1"
+                    >
+                      Sales
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="contact-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#bordered-contact"
+                      type="button"
+                      role="tab"
+                      aria-controls="contact"
+                      aria-selected="false"
+                      tabindex="-1"
+                    >
+                      Manage Products
+                    </button>
+                  </li>
+                </ul>
+                <div class="tab-content pt-2" id="borderedTabContent">
+                  <div
+                    class="tab-pane fade"
+                    id="bordered-home"
+                    role="tabpanel"
+                    aria-labelledby="home-tab"
+                  >
+                    <div class="card-body">
+                      <h5 class="card-title">Floating labels Form</h5>
+
+                      <!-- Floating Labels Form -->
+                      <form
+                        class="row g-3"
+                        enctype="multipart/form-data"
+                        method="post"
+                        action="/addproduct"
+                      >
+                        <div class="col-md-12">
+                          <div class="form-floating">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="name"
+                              name="name"
+                              placeholder="Your Name"
+                            />
+                            <label for="name">Product Name</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-floating">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="price"
+                              placeholder="Price"
+                              name="price"
+                            />
+                            <label for="price">price</label>
+                          </div>
+                        </div>
+
+                        <div class="col-12">
+                          <label
+                            for="inputNumber"
+                            class="col-sm-2 col-form-label"
+                            >Select product image</label
+                          >
+                          <div class="col-sm-10">
+                            <input
+                              class="form-control"
+                              type="file"
+                              id="image"
+                              name="image"
+                              accept="image/png, image/jpeg"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="text-center">
+                          <button type="submit" class="btn btn-primary">
+                            Save Product
+                          </button>
+                          <button type="reset" class="btn btn-secondary">
+                            Reset Fields
+                          </button>
+                        </div>
+                      </form>
+                      <!-- End floating Labels Form -->
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="bordered-profile"
+                    role="tabpanel"
+                    aria-labelledby="profile-tab"
+                  >
+                    Nesciunt totam et. Consequuntur magnam aliquid eos nulla
+                    dolor iure eos quia. Accusantium distinctio omnis et atque
+                    fugiat. Itaque doloremque aliquid sint quasi quia distinctio
+                    similique. Voluptate nihil recusandae mollitia dolores. Ut
+                    laboriosam voluptatum dicta.
+                  </div>
+                  <div
+                    class="tab-pane fade active show"
+                    id="bordered-contact"
+                    role="tabpanel"
+                    aria-labelledby="contact-tab"
+                  >
+                    {% if user_products %} {% for product in user_products %}
+                    <div class="card info-card customers-card">
+                      <div class="card-body">
+                        <h5 class="card-title">
+                          {{product['name']}}
+                          <span>| ${{product['price']}}</span>
+                        </h5>
+                        <div class="d-flex align-items-center">
+                          <div
+                            class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                          >
+                            <img
+                              src="{{ url_for('static', filename='products/' + product['image']) }}"
+                              alt=""
+                            />
+                          </div>
+                          <div class="ps-3">
+                            <span class="text-muted small pt-2 ps-1"
+                              >Not what you expected to see?</span
+                            >
+
+                            <!-- modal -->
+                            <button
+                              type="button"
+                              class="btn btn-primary rounded-pill"
+                              data-bs-toggle="modal"
+                              data-bs-target="#{{product['_id']}}"
+                            >
+                              Manage
+                            </button>
+                            <!-- Delete Button -->
+
+                            <button
+                              href=""
+                              type="button"
+                              class="btn btn-danger rounded-pill"
+                              data-bs-toggle="modal"
+                              data-bs-target="#{{product['_id']}}delete"
+                            >
+                              <i class="bi bi-trash3"></i>
+                            </button>
+                            <div
+                              class="modal fade"
+                              id="{{product['_id']}}delete"
+                              tabindex="-1"
+                              style="display: none"
+                              aria-hidden="true"
+                            >
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">DELETE</h5>
+                                    <button
+                                      type="button"
+                                      class="btn-close"
+                                      data-bs-dismiss="modal"
+                                      aria-label="Close"
+                                    ></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    Are you sure you want to delete product
+                                    <b> {{product['name']}} </b>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <form action="/delete_product" method="POST">
+                                      <input
+                                        type="text"
+                                        value="{{product['_id']}}"
+                                        name="id"
+                                        id="id"
+                                        hidden
+                                      />
+                                      <button
+                                        type="submit"
+                                        class="btn btn-danger"
+                                      >
+                                        Delete
+                                      </button>
+                                    </form>
+
+                                    <button
+                                      type="button"
+                                      class="btn btn-success"
+                                      data-bs-dismiss="modal"
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- Delete Button -->
+
+                            <div
+                              class="modal fade"
+                              id="{{product['_id']}}"
+                              tabindex="-1"
+                              style="display: none"
+                              aria-hidden="true"
+                            >
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">
+                                      Managing product
+                                      <b>{{product['name']}}</b>
+                                    </h5>
+                                    <button
+                                      type="button"
+                                      class="btn-close"
+                                      data-bs-dismiss="modal"
+                                      aria-label="Close"
+                                    ></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <h5 class="card-title">update product</h5>
+
+                                    <!-- Floating Labels Form -->
+                                    <form
+                                      class="row g-3"
+                                      enctype="multipart/form-data"
+                                      method="POST"
+                                      action="/update_product"
+                                    >
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        id="id"
+                                        name="id"
+                                        value="{{product['_id']}}"
+                                        hidden
+                                      />
+
+                                      <div class="col-md-12">
+                                        <div class="form-floating">
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="name"
+                                            name="name"
+                                            placeholder="Your Name"
+                                            value="{{product['name']}}"
+                                          />
+                                          <label for="name">Product Name</label>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-12">
+                                        <div class="form-floating">
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="price"
+                                            placeholder="Price"
+                                            name="price"
+                                            value="{{product['price']}}"
+                                          />
+                                          <label for="price">price</label>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-12">
+                                        <hr />
+                                        <p>Image</p>
+                                        <img
+                                          src="{{ url_for('static', filename='products/' + product['image']) }}"
+                                          alt=""
+                                        />
+                                        <hr />
+                                      </div>
+                                      <div class="col-12">
+                                        <label
+                                          for="inputNumber"
+                                          class="col-sm-12 col-form-label"
+                                          >Select product image</label
+                                        >
+                                        <div class="col-sm-12">
+                                          <input
+                                            class="form-control"
+                                            type="file"
+                                            id="image"
+                                            name="image"
+                                          />
+                                        </div>
+                                      </div>
+
+                                      <div class="text-center">
+                                        <button
+                                          href=""
+                                          type="submit"
+                                          class="btn btn-success rounded-pill"
+                                        >
+                                          Update product
+                                        </button>
+                                      </div>
+                                    </form>
+
+                                    <!-- End floating Labels Form -->
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button
+                                      type="button"
+                                      class="btn btn-danger"
+                                      data-bs-dismiss="modal"
+                                    >
+                                      Close
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- modal -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %} {% endif %}
+                  </div>
+                </div>
+                <!-- End Bordered Tabs -->
+              </div>
+            </div>
+          </div>
+
+          <!-- 
+    top selling products
+   -->
+          <div class="col-12">
+            <div class="card top-selling overflow-auto">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"
+                  ><i class="bi bi-three-dots"></i
+                ></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body pb-0">
+                <h5 class="card-title">Top Selling <span>| Today</span></h5>
+
+                <table class="table table-borderless">
+                  <thead>
+                    <tr>
+                      <th scope="col">Preview</th>
+                      <th scope="col">Product</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Sold</th>
+                      <th scope="col">Revenue</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if user_products %} {% for x in user_products %}
+                    <tr>
+                      <th scope="row">
+                        <a href="#"
+                          ><img src="assets/img/product-1.jpg" alt=""
+                        /></a>
+                      </th>
+                      <td>
+                        <a href="#" class="text-primary fw-bold"
+                          >Ut inventore ipsa voluptas nulla</a
+                        >
+                      </td>
+                      <td>$64</td>
+                      <td class="fw-bold">124</td>
+                      <td>$5,828</td>
+                    </tr>
+                    {% endfor %} {% endif %}
+                    <tr>
+                      <th scope="row">
+                        <a href="#"
+                          ><img src="assets/img/product-1.jpg" alt=""
+                        /></a>
+                      </th>
+                      <td>
+                        <a href="#" class="text-primary fw-bold"
+                          >Ut inventore ipsa voluptas nulla</a
+                        >
+                      </td>
+                      <td>$64</td>
+                      <td class="fw-bold">124</td>
+                      <td>$5,828</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- End #main -->
+
+<!-- <h1>Welcome to Smart Shopper</h1>
+<h2>What are you looking for today?</h2>
+<div class="container">
+    <a href="Become a Member"></a>
+    <a class="btn btn-primary" href="{{url_for('register')}}">Login</a>
+</div>
+<form action="/" method="post">
+  <input type="text" name="message" placeholder="Your message" />
+  <input type="submit" />
+</form> -->
+{% endblock%}
