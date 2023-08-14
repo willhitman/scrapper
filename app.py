@@ -135,11 +135,12 @@ def dashboard():
         else:
             user_cart = get_user_cart(email=session['user'])
             user_notifications = get_notifications(email=session["user"])
+            status = check_application(session['user'])
             total_cost = 0.00
             for product in user_cart:
                 total_cost += float(product["calprice"])
             total_cost= "{:.2f}".format(total_cost)
-            return render_template("dashboard1.html", email = session['user'], user_cart = user_cart, total_cost = total_cost,user_notifications = user_notifications)
+            return render_template("dashboard1.html", email = session['user'], user_cart = user_cart, total_cost = total_cost,user_notifications = user_notifications, status = status)
 
 
     return redirect(url_for('login'))

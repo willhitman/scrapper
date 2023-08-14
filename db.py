@@ -144,6 +144,19 @@ def search_watched_products(email):
         r['count'] = watch_count
     return product_list
 
+def check_application(email):
+    try:
+        stat = status.find_one({'user':email})
+        if stat:
+            print(stat)
+            return "Pending"
+        return "None"
+    except Exception as e:
+        print(e)
+        return "Error"
+    
+check_application("giftwt9wt@gmail.com")
+
 def get_one_product(search):
     product_list = []
     try:

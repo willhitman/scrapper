@@ -407,6 +407,11 @@
                   Register With us to discover New customers
                   <span>| its free of charge</span>
                 </h5>
+                {% if status %} {% if status == "Pending" %} <h5 class="card-title" style="color: red;">
+                 We Received Your Application
+                  <span>| Decision is pending</span>
+                </h5>
+                {% else %}
                 <form class="row g-3" action="/upload_docs" method="POST" enctype="multipart/form-data">
                   <div class="col-12">
                     <label for="blicense" class="col-sm-4 col-form-label"
@@ -506,6 +511,8 @@
                   </div>
 
                 </form>
+                {% endif %}
+                {% endif %}
               </div>
             </div>
           </div>
