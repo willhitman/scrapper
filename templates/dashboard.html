@@ -265,11 +265,52 @@
                     role="tabpanel"
                     aria-labelledby="profile-tab"
                   >
-                    Nesciunt totam et. Consequuntur magnam aliquid eos nulla
-                    dolor iure eos quia. Accusantium distinctio omnis et atque
-                    fugiat. Itaque doloremque aliquid sint quasi quia distinctio
-                    similique. Voluptate nihil recusandae mollitia dolores. Ut
-                    laboriosam voluptatum dicta.
+            <button id="getLocationBtn" class="btn btn-success rounded-pill mb-2em" style="margin-bottom: 2em;">Get Location</button>
+
+                  <form action="/add_location" method="POST" id="myForm">
+                    <input type="text" name="locationtext" id="locationtext" readonly placeholder="Your coordinates will show here">
+                    <button type="submit" class="btn btn-success rounded-pill">Save Location</button>
+                </form>
+          
+              <script>
+                  var myForm = document.getElementById('myForm');
+                  var locationtextInput = document.getElementById('locationtext');
+          
+        
+          
+                  locationtextInput.value = latitude + ", " + longitude;
+          
+                  
+                  myForm.submit();
+              </script>
+            
+
+            <script>
+                var getLocationBtn = document.getElementById('getLocationBtn');
+        
+                getLocationBtn.addEventListener('click', function() {
+                    if (navigator.geolocation) {
+                        // Get the user's current location
+                        navigator.geolocation.getCurrentPosition(showPosition);
+                    } else {
+                        alert('Geolocation is not supported by this browser.');
+                    }
+                });
+        
+                function showPosition(position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+        
+                    // Do something with the latitude and longitude values
+                    console.log('Latitude: ' + latitude);
+                    console.log('Longitude: ' + longitude);
+                    var locationtextInput = document.getElementById('locationtext');
+          
+        
+          
+                  locationtextInput.value = latitude + ", " + longitude;
+                }
+            </script>
                   </div>
                   <div
                     class="tab-pane fade active show"
@@ -526,11 +567,9 @@
                 <table class="table table-borderless">
                   <thead>
                     <tr>
-                      <th scope="col">Preview</th>
-                      <th scope="col">Product</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Watch</th>
                       <th scope="col">Price</th>
-                      <th scope="col">Sold</th>
-                      <th scope="col">Revenue</th>
                     </tr>
                   </thead>
                   <tbody>
