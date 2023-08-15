@@ -1,3 +1,4 @@
+chromedriver-autoinstaller
 pymongo
 flask-bcrypt
 gunicorn==19.7.1
