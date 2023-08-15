@@ -5,9 +5,7 @@ import secrets
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
-from PIL import Image
 from werkzeug.utils import secure_filename
-import urllib.request
 
 from config import Config
 app = Flask(__name__)
