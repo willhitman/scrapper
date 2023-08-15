@@ -2,85 +2,80 @@ from bs4 import BeautifulSoup, Tag
 import requests
 import time
 
+options = webdriver.ChromeOptions()
+options.add_argument('--no-sandbox')
+options.add_argument('--headless')
+options.add_argument('--ignore-certificate-errors')
+options.add_argument('--disable-dev-shm-usage')
+options.add_argument('--disable-extensions')
+options.add_argument('--disable-gpu')
+options.add_argument('--user-agent={}'.format(random.choice(list(self.user_agents))))
 
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.keys import Keys
+driver = webdriver.Chrome(options=options)
+driver.set_page_load_timeout(90)
 
-def document_initialised(driver):
-    return driver.execute_script("return initialised")
+# Load the URL and get the page source
 
-def trial(search):
-    service = Service('C:/chrome/chromedriver.exe')
-    options = webdriver.ChromeOptions()
-    driver = webdriver.Chrome(service=service, options=options)
-    url = "%s%s" %("https://tmpnponline.co.zw/?post_type=product&s=",search) #bad
-    url3 = "%s%s" %("https://www.spar.co.zw/products?q=",search)
-    url2 = "https://tmpnponline.co.zw/"
-    url4 = "%s%s%s" %("https://okonline.co.zw/?s=",search,"&post_type=product&dgwt_wcas=1")
-    url5 = "%s%s%s" %("https://freshinabox.org/search?q=",search,"&options%5Bprefix%5D=last")
-    # instance of Options class allows
-    # us to configure Headless Chrome
-    options = Options()
 
-    # this parameter tells Chrome that
-    # it should be run without UI (Headless)
-    options.headless = True
 
-    # initializing webdriver for Chrome with our options
-    driver = webdriver.Chrome(options=options)
 
-    # getting GeekForGeeks webpage
-    driver.get(url5)
-    time.sleep(20)
-    # WebDriverWait(driver, timeout=10).until(document_initialised)
-    # elem = driver.find_element(By.CSS_SELECTOR, 'ul.products')
-    # elem = driver.find_element(By.NAME, "phrase")
-    # elem.send_keys("peache")
-    # elem.send_keys(Keys.RETURN)
+# def trial(search):
+#     service = Service('C:/chrome/chromedriver.exe')
+#     options = webdriver.ChromeOptions()
+#     driver = webdriver.Chrome(service=service, options=options)
+#     url = "%s%s" %("https://tmpnponline.co.zw/?post_type=product&s=",search) #bad
+#     url3 = "%s%s" %("https://www.spar.co.zw/products?q=",search)
+#     url2 = "https://tmpnponline.co.zw/"
+#     url4 = "%s%s%s" %("https://okonline.co.zw/?s=",search,"&post_type=product&dgwt_wcas=1")
+#     url5 = "%s%s%s" %("https://freshinabox.org/search?q=",search,"&options%5Bprefix%5D=last")
+#     # instance of Options class allows
+#     # us to configure Headless Chrome
+#     options = Options()
+
+#     # this parameter tells Chrome that
+#     # it should be run without UI (Headless)
+#     options.headless = True
+
+#     # initializing webdriver for Chrome with our options
+#     driver = webdriver.Chrome(options=options)
+
+#     # getting GeekForGeeks webpage
+#     driver.get(url5)
+#     time.sleep(20)
+#     # WebDriverWait(driver, timeout=10).until(document_initialised)
+#     # elem = driver.find_element(By.CSS_SELECTOR, 'ul.products')
+#     # elem = driver.find_element(By.NAME, "phrase")
+#     # elem.send_keys("peache")
+#     # elem.send_keys(Keys.RETURN)
     
-    file = open(driver.page_source,"a", encoding='utf8')
-    file.write(driver.page_source)
-    print(file)
-    # print(driver.page_source)
-    # soup = BeautifulSoup(file, 'html.parser')
+#     file = open(driver.page_source,"a", encoding='utf8')
+#     file.write(driver.page_source)
+#     print(file)
+#     # print(driver.page_source)
+#     # soup = BeautifulSoup(file, 'html.parser')
 
-    # print(elem)
+#     # print(elem)
 
-    # We can also get some information 
-    # about page in browser.
-    # So let's output webpage title into
-    # terminal to be sure that the browser
-    # is actually running.
-    # print(driver.page_source)
+#     # We can also get some information 
+#     # about page in browser.
+#     # So let's output webpage title into
+#     # terminal to be sure that the browser
+#     # is actually running.
+#     # print(driver.page_source)
 
-    # close browser after our manipulations
-    driver.close()
+#     # close browser after our manipulations
+#     driver.close()
 
 def getSpar(search):
-    service = Service('C:/chrome/chromedriver.exe')
-    options = webdriver.ChromeOptions()
-    driver = webdriver.Chrome(service=service, options=options)
+    
+   
  
     url3 = "%s%s" %("https://www.spar.co.zw/products?q=",search)
  
-    # instance of Options class allows
-    # us to configure Headless Chrome
-    options = Options()
-
-    # this parameter tells Chrome that
-    # it should be run without UI (Headless)
-    options.headless = True
-
-    # initializing webdriver for Chrome with our options
-    driver = webdriver.Chrome(options=options)
-
+    driver.implicitly_wait(6)
     # getting GeekForGeeks webpage
     driver.get(url3)
-    time.sleep(5)
+    # time.sleep(5)
 
     # add html to beautiful soup
     soup = BeautifulSoup(driver.page_source, "html.parser")
@@ -120,23 +115,13 @@ def getSpar(search):
     return products_list
 
 def getFreshInABox(search):
-    service = Service('C:/chrome/chromedriver.exe')
-    options = webdriver.ChromeOptions()
-    driver = webdriver.Chrome(service=service, options=options)
+   
  
     url = "%s%s%s" %("https://freshinabox.org/search?q=",search,"&options%5Bprefix%5D=last")
  
     # instance of Options class allows
     # us to configure Headless Chrome
-    options = Options()
-
-    # this parameter tells Chrome that
-    # it should be run without UI (Headless)
-    options.headless = True
-
-    # initializing webdriver for Chrome with our options
-    driver = webdriver.Chrome(options=options)
-
+    driver.implicitly_wait(6)
     # getting GeekForGeeks webpage
     driver.get(url)
     time.sleep(8)
@@ -181,23 +166,15 @@ def getFreshInABox(search):
 
 
 def getOkaySuperMarket(search):
-    service = Service('C:/chrome/chromedriver.exe')
-    options = webdriver.ChromeOptions()
-    driver = webdriver.Chrome(service=service, options=options)
+    
  
     
     url = "%s%s%s" %("https://okonline.co.zw/?s=",search,"&post_type=product&dgwt_wcas=1")
  
     # instance of Options class allows
     # us to configure Headless Chrome
-    options = Options()
-
-    # this parameter tells Chrome that
-    # it should be run without UI (Headless)
-    options.headless = True
-
-    # initializing webdriver for Chrome with our options
-    driver = webdriver.Chrome(options=options)
+    driver.implicitly_wait(6)
+    # getting GeekForGeeks webpage
  
     # getting GeekForGeeks webpage
     driver.get(url)
