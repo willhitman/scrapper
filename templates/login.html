@@ -12,10 +12,10 @@
         <div class="alert alert-info">{{ message }}</div>
     {% endif %}
 {% endif %}
-<h2>Welcome Login Below to access your Account</h2>
-<div class="container">
-  <form action="/login" method="post">
 
+<div class="container">
+  <form action="/login" method="post" class="mt-5">
+    <h2>Welcome Login Below to access your Account</h2>
     <div class="mb-3">
       <label for="email" class="form-label">Email address</label>
       <input
@@ -39,6 +39,8 @@
       <label class="form-check-label" for="check">Accept terms of service</label>
     </div> -->
     <button type="submit" class="btn btn-primary">Login</button>
+    <br>
+    <a href="/register">Register here</a>
   </form>
 </div>
 {% endblock%}
