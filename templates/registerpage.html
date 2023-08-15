@@ -12,9 +12,9 @@
         <div class="alert alert-info">{{ message }}</div>
     {% endif %}
 {% endif %}
-<h2>Welcome Register Below to get a free acount</h2>
 <div class="container">
-  <form action="/register" method="post">
+  <form action="/register" method="post" class="mt-5">
+<h2>Welcome Register Below to get a free acount</h2>
     
     <div class="mb-3">
         <label for="email" class="form-label" required>Name</label>
@@ -56,6 +56,8 @@
       <label class="form-check-label" for="check">Accept terms of service</label>
     </div> -->
     <button type="submit" class="btn btn-primary">Register</button>
+    <br>
+    <a href="/login">Alredy have an account? Login here</a>
   </form>
 </div>
 {% endblock%}
