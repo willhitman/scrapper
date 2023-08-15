@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup, Tag
 import requests
 import time
 
+from selenium import webdriver
 options = webdriver.ChromeOptions()
 options.add_argument('--no-sandbox')
 options.add_argument('--headless')
