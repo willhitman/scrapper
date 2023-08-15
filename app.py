@@ -95,7 +95,9 @@ def register():
         else:
             return render_template("registerpage.html", message = result, message_type = "danger")
     return render_template("registerpage.html")
-
+    
+@app.route("/")
+@app.route("/home")
 @app.route("/login", methods=["GET", 'POST'])
 def login():
     """
